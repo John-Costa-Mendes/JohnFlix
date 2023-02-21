@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/card_filmes"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#656565"
@@ -9,7 +10,7 @@
 
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/Image_Movie"
         android:layout_width="match_parent"
         android:layout_height="600dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -31,12 +32,13 @@
         android:textColor="@color/white"
         android:textSize="40sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView"
+        app:layout_constraintBottom_toBottomOf="@+id/Image_Movie"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="TextSizeCheck" />
 
     <TextView
+        android:id="@+id/movie_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -44,8 +46,6 @@
         android:textColor="@color/white"
         android:textSize="60sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"/>
+        app:layout_constraintTop_toBottomOf="@+id/Image_Movie" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-
-
