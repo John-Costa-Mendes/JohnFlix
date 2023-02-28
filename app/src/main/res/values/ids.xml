@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="tvMovieTitle" type="id" />
+    <item name="tvMovieTitle" type="id" />
+    <item name="ivMovieImg" type="id" />
+    <item name="tvMovieDate" type="id" />
+    <item name="cardView" type="id" />
+</resources>
