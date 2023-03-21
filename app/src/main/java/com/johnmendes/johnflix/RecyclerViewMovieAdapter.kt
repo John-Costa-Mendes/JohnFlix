@@ -37,10 +37,10 @@ class RecyclerViewMovieAdapter constructor(
     }
 
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val tvMovieTitle: TextView = itemView.findViewById(R.id.tvMovieTitle)
-        val ivMovieImg: ImageView = itemView.findViewById(R.id.ivMovieImg)
-        val tvMovieDate: TextView = itemView.findViewById(R.id.tvMovieDate)
-        val cardView: CardView = itemView.findViewById(R.id.cardView)
+        val tvMovieTitle: TextView = itemView.findViewById(R.id.movie_title)
+        val ivMovieImg: ImageView = itemView.findViewById(R.id.Image_Movie)
+        val tvMovieDate: TextView = itemView.findViewById(R.id.TAG)
+        val cardView: CardView = itemView.findViewById(R.id.card_filmes)
 
     }
 
