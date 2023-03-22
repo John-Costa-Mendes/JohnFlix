@@ -8,7 +8,7 @@ class MovieResponse {
     var id : Int = 0
 
     @SerializedName ("poster_path")
-    var poster_path: String? = ""
+    var image: String? = ""
 
     @SerializedName ("title")
     var title: String = ""

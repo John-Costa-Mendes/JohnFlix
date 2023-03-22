@@ -1,6 +1,7 @@
 package com.johnmendes.johnflix.remote
 
 import com.johnmendes.johnflix.util.Constants.Companion.API_KEY
+import com.johnmendes.johnflix.util.Constants.Companion.LANGUAGE
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -10,7 +11,7 @@ interface MovieService {
     @GET("movie/popular")
     fun moviePopular(
         @Query("api_key") apiKey: String = API_KEY,
-        @Query("language") language: String = "pt-BR"
+        @Query("language") language: String = LANGUAGE
     ): Call<ListResults>
 
     /*@GET("movie/upcoming")

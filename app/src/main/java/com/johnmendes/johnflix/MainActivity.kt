@@ -2,6 +2,7 @@ package com.johnmendes.johnflix
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -24,14 +25,13 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.movies_activity)
 
         val service = RetrofitClient.createService()
-        val call : Call<ListResults> = service.moviePopular()
-        call.enqueue(object : Callback<ListResults>{
+        val call: Call<ListResults> = service.moviePopular()
+        call.enqueue(object : Callback<ListResults> {
             override fun onResponse(call: Call<ListResults>, response: Response<ListResults>) {
                 response.body()?.let { showMovies(it.results) }
             }
-
             override fun onFailure(call: Call<ListResults>, t: Throwable) {
-                val s = ""
+                Log.e("Error", t.toString())
             }
         })
 
@@ -47,8 +47,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun prepareMovieListData() {
         for (i in 1..20) {
-            val movie = Movie("Coco", R.drawable.cocofilme, "20/02/2024")
-            movieList.add(movie)
+            //val movie = Movie("Coco", R.drawable.cocofilme, "20/02/2024")
+            //movieList.add(movie)
         }
 
         recyclerViewMovieAdapter?.notifyDataSetChanged()
@@ -57,7 +57,7 @@ class MainActivity : AppCompatActivity() {
     private fun showMovies(movies: List<MovieResponse>) {
         movieList.clear()
         movies.forEach {
-            val movie = Movie(it.title, R.drawable.cocofilme, it.release_date)
+            val movie = Movie(it.title, it.image, it.release_date)
             movieList.add(movie)
         }
 

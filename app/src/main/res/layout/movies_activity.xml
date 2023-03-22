@@ -54,8 +54,10 @@
         android:id="@+id/rvMovieLists"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:listitem="@layout/activity_main"
+        android:background="#656565"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        app:layout_constraintTop_toBottomOf="@id/textView"/>
+        app:layout_constraintTop_toBottomOf="@id/textView"
+        tools:layout_editor_absoluteX="40dp"
+        tools:listitem="@layout/activity_main" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,18 +3,18 @@ package com.johnmendes.johnflix
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import android.widget.Toast
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.johnmendes.johnflix.util.Constants.Companion.IMAGE_BASE_URL
+import kotlinx.android.synthetic.main.activity_main.view.*
 
 class RecyclerViewMovieAdapter constructor(
     private val getActivity: MainActivity,
     private val movieList: List<Movie>
 ) :
     RecyclerView.Adapter<RecyclerViewMovieAdapter.MyViewHolder>() {
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -27,21 +27,20 @@ class RecyclerViewMovieAdapter constructor(
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        holder.tvMovieTitle.text = movieList[position].title
-        holder.ivMovieImg.setImageResource(movieList[position].image)
-        holder.tvMovieDate.text = movieList[position].date
+        holder.bindMovie(movieList.get(position) )
 
         holder.cardView.setOnClickListener {
             Toast.makeText(getActivity, movieList[position].title, Toast.LENGTH_LONG).show()
         }
     }
 
-    class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val tvMovieTitle: TextView = itemView.findViewById(R.id.movie_title)
-        val ivMovieImg: ImageView = itemView.findViewById(R.id.Image_Movie)
-        val tvMovieDate: TextView = itemView.findViewById(R.id.TAG)
+    class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        fun bindMovie(movie : Movie){
+            itemView.movie_title.text = movie.title
+            itemView.TAG.text = movie.date
+            Glide.with(itemView).load(IMAGE_BASE_URL + movie.image).into(itemView.Image_Movie)
+        }
         val cardView: CardView = itemView.findViewById(R.id.card_filmes)
 
     }
-
 }
