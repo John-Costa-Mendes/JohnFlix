@@ -3,7 +3,9 @@ package com.johnmendes.johnflix
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.johnmendes.johnflix.databinding.ActivityMainBinding
@@ -14,7 +16,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var binding: ActivityMainBinding
     private var recyclerView: RecyclerView? = null
@@ -44,6 +46,9 @@ class MainActivity : AppCompatActivity() {
         val layoutManager: RecyclerView.LayoutManager = GridLayoutManager(this, 3)
         recyclerView?.layoutManager = layoutManager
         recyclerView?.adapter = recyclerViewMovieAdapter
+
+        binding.Popular.setOnClickListener(this)
+        binding.Upcoming.setOnClickListener(this)
     }
 
     private fun prepareMovieListData() {
@@ -63,5 +68,27 @@ class MainActivity : AppCompatActivity() {
         }
 
         recyclerViewMovieAdapter?.notifyDataSetChanged()
+
+    }
+
+    override fun onClick(view: View) {
+        if (view.id in listOf(R.id.Popular, R.id.Upcoming)){
+            buttonColor(view.id)
+        }
+    }
+    private fun buttonColor (id: Int){
+        binding.Upcoming.setBackgroundColor(ContextCompat.getColor(this, R.color.dark_grey))
+        binding.Upcoming.setTextColor(ContextCompat.getColor(this, R.color.white))
+        binding.Popular.setBackgroundColor(ContextCompat.getColor(this, R.color.dark_grey))
+        binding.Popular.setTextColor(ContextCompat.getColor(this, R.color.white))
+
+        if (id == R.id.Upcoming){
+            binding.Upcoming.setBackgroundColor(ContextCompat.getColor(this, R.color.white))
+            binding.Upcoming.setTextColor(ContextCompat.getColor(this, R.color.black))
+        } else if(id == R.id.Popular){
+            binding.Popular.setBackgroundColor(ContextCompat.getColor(this, R.color.white))
+            binding.Popular.setTextColor(ContextCompat.getColor(this, R.color.black))
+        }
+
     }
 }
