@@ -14,8 +14,6 @@ class MovieResponse {
     var title: String = ""
 
     @SerializedName ("release_date")
-    var release_date: String = ""
-
-
+    var date: String = ""
 
 }

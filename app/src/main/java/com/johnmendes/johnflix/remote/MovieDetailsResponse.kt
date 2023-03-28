@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 class MovieDetailsResponse() {
 
     @SerializedName("poster_path")
-    var poster_path : String? = ""
+    var posterPath : String? = ""
 
     @SerializedName("title")
     var title: String = ""
@@ -14,7 +14,7 @@ class MovieDetailsResponse() {
     var genres: List<String> = listOf()
 
     @SerializedName("release_date")
-    var release_date: String = ""
+    var releaseDate: String = ""
 
     @SerializedName("runtime")
     var runtime: Int = 0

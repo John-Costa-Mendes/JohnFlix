@@ -8,17 +8,15 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.johnmendes.johnflix.util.Constants.Companion.IMAGE_BASE_URL
-import kotlinx.android.synthetic.main.activity_main.view.*
+import kotlinx.android.synthetic.main.activity_movie.view.*
 
 class RecyclerViewMovieAdapter constructor(
-    private val getActivity: MainActivity,
-    private val movieList: List<Movie>
-) :
-    RecyclerView.Adapter<RecyclerViewMovieAdapter.MyViewHolder>() {
+    private val getActivity: MainActivity, private val movieList: List<Movie>
+) : RecyclerView.Adapter<RecyclerViewMovieAdapter.MyViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.activity_main, parent, false)
+        val view =
+            LayoutInflater.from(parent.context).inflate(R.layout.activity_movie, parent, false)
         return MyViewHolder(view)
     }
 
@@ -27,7 +25,7 @@ class RecyclerViewMovieAdapter constructor(
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        holder.bindMovie(movieList.get(position) )
+        holder.bindMovie(movieList.get(position))
 
         holder.cardView.setOnClickListener {
             Toast.makeText(getActivity, movieList[position].title, Toast.LENGTH_LONG).show()
@@ -35,11 +33,12 @@ class RecyclerViewMovieAdapter constructor(
     }
 
     class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        fun bindMovie(movie : Movie){
+        fun bindMovie(movie: Movie) {
             itemView.movie_title.text = movie.title
             itemView.TAG.text = movie.date
             Glide.with(itemView).load(IMAGE_BASE_URL + movie.image).into(itemView.Image_Movie)
         }
+
         val cardView: CardView = itemView.findViewById(R.id.card_filmes)
 
     }
