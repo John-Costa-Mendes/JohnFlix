@@ -14,13 +14,13 @@ interface MovieService {
         @Query("language") language: String = LANGUAGE
     ): Call<ListResults>
 
-    /*@GET("movie/upcoming")
+    @GET("movie/upcoming")
     fun movieUpcoming(
         @Query("api_key") apiKey: String = API_KEY,
         @Query("language") language: String = "pt-BR"
-    ): Call<List<MovieResponse>>
+    ): Call<ListResults>
 
-    @GET("movie/{movie_id}")
+    /*@GET("movie/{movie_id}")
     fun movieDetails(): Call<List<MovieDetailsResponse>>
 
     @GET("movie/{movie_id}/credits")
