@@ -1,9 +1,9 @@
 package com.johnmendes.johnflix
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -13,6 +13,8 @@ import kotlinx.android.synthetic.main.activity_movie.view.*
 class RecyclerViewMovieAdapter constructor(
     private val getActivity: MainActivity, private val movieList: List<Movie>
 ) : RecyclerView.Adapter<RecyclerViewMovieAdapter.MyViewHolder>() {
+
+    private val MainActivity = MainActivity()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val view =
@@ -28,7 +30,8 @@ class RecyclerViewMovieAdapter constructor(
         holder.bindMovie(movieList.get(position))
 
         holder.cardView.setOnClickListener {
-            Toast.makeText(getActivity, movieList[position].title, Toast.LENGTH_LONG).show()
+            val intent = Intent(holder.cardView.context, DetailsMovieActivity::class.java)
+            holder.itemView.context.startActivity(intent)
         }
     }
 
@@ -38,7 +41,6 @@ class RecyclerViewMovieAdapter constructor(
             itemView.TAG.text = movie.date
             Glide.with(itemView).load(IMAGE_BASE_URL + movie.image).into(itemView.Image_Movie)
         }
-
         val cardView: CardView = itemView.findViewById(R.id.card_filmes)
 
     }

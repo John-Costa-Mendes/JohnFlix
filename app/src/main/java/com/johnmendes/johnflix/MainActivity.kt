@@ -1,6 +1,8 @@
 package com.johnmendes.johnflix
 
 import android.annotation.SuppressLint
+import android.content.Intent
+import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -12,6 +14,7 @@ import com.johnmendes.johnflix.databinding.ActivityMainBinding
 import com.johnmendes.johnflix.remote.ListResults
 import com.johnmendes.johnflix.remote.MovieResponse
 import com.johnmendes.johnflix.remote.RetrofitClient
+import kotlinx.android.synthetic.main.activity_movie.view.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -29,6 +32,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
 
         recyclerView = findViewById(R.id.rvMovieLists)
         recyclerViewMovieAdapter = RecyclerViewMovieAdapter(this@MainActivity, movieList)
@@ -68,6 +72,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
+
     private fun segmentedButtonClicked(id: Int) {
         var call: Call<ListResults>? = null
 
@@ -94,4 +99,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             }
         })
     }
+
+    fun navigation() {
+        val intent = Intent(this.applicationContext, DetailsMovieActivity::class.java)
+        intent.flags = FLAG_ACTIVITY_NEW_TASK
+        startActivity(intent)
+    }
+
 }
