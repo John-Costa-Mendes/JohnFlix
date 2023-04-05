@@ -6,8 +6,8 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class RetrofitClient {
-    companion object {
 
+    companion object {
         private lateinit var INSTANCE: Retrofit
 
         private fun getRetrofitInstance(): Retrofit {

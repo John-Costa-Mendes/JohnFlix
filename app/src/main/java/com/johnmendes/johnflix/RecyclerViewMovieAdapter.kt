@@ -8,17 +8,15 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.johnmendes.johnflix.util.Constants.Companion.IMAGE_BASE_URL
-import kotlinx.android.synthetic.main.activity_movie.view.*
+import kotlinx.android.synthetic.main.movie.view.*
 
 class RecyclerViewMovieAdapter constructor(
-    private val getActivity: MainActivity, private val movieList: List<Movie>
-) : RecyclerView.Adapter<RecyclerViewMovieAdapter.MyViewHolder>() {
-
-    private val MainActivity = MainActivity()
+    private val getActivity: MainActivity, private val movieList: List<Movie>)
+    : RecyclerView.Adapter<RecyclerViewMovieAdapter.MyViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val view =
-            LayoutInflater.from(parent.context).inflate(R.layout.activity_movie, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.movie, parent, false)
         return MyViewHolder(view)
     }
 
@@ -31,6 +29,7 @@ class RecyclerViewMovieAdapter constructor(
 
         holder.cardView.setOnClickListener {
             val intent = Intent(holder.cardView.context, DetailsMovieActivity::class.java)
+            intent.putExtra("movie_id", movieList[position].idMovie )
             holder.itemView.context.startActivity(intent)
         }
     }
@@ -42,6 +41,5 @@ class RecyclerViewMovieAdapter constructor(
             Glide.with(itemView).load(IMAGE_BASE_URL + movie.image).into(itemView.Image_Movie)
         }
         val cardView: CardView = itemView.findViewById(R.id.card_filmes)
-
     }
 }

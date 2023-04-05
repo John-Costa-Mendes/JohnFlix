@@ -1,8 +1,6 @@
 package com.johnmendes.johnflix
 
 import android.annotation.SuppressLint
-import android.content.Intent
-import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -11,10 +9,10 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.johnmendes.johnflix.databinding.ActivityMainBinding
-import com.johnmendes.johnflix.remote.ListResults
+import com.johnmendes.johnflix.remote.ListResultsMovie
 import com.johnmendes.johnflix.remote.MovieResponse
 import com.johnmendes.johnflix.remote.RetrofitClient
-import kotlinx.android.synthetic.main.activity_movie.view.*
+import kotlinx.android.synthetic.main.movie.view.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -33,7 +31,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
         recyclerView = findViewById(R.id.rvMovieLists)
         recyclerViewMovieAdapter = RecyclerViewMovieAdapter(this@MainActivity, movieList)
         val layoutManager: RecyclerView.LayoutManager = GridLayoutManager(this, 3)
@@ -46,24 +43,13 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         segmentedButtonClicked(R.id.Popular)
     }
 
-    private fun prepareMovieListData() {
-        for (i in 1..20) {
-            val movie = Movie("Coco", R.drawable.cocofilme.toString(), "20/02/2024")
-            movieList.add(movie)
-        }
-
-        recyclerViewMovieAdapter?.notifyDataSetChanged()
-    }
-
     private fun show(movies: List<MovieResponse>) {
         movieList.clear()
         movies.forEach {
-            val movie = Movie(it.title, it.image, it.date)
+            val movie = Movie(it.title, it.image, it.date, it.idMovie)
             movieList.add(movie)
         }
-
         recyclerViewMovieAdapter?.notifyDataSetChanged()
-
     }
 
     override fun onClick(view: View) {
@@ -72,9 +58,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-
     private fun segmentedButtonClicked(id: Int) {
-        var call: Call<ListResults>? = null
+        var call: Call<ListResultsMovie>? = null
 
         if (id == R.id.Upcoming) {
             call = service.movieUpcoming()
@@ -89,21 +74,14 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             binding.Popular.setBackgroundColor(ContextCompat.getColor(this, R.color.white))
             binding.Popular.setTextColor(ContextCompat.getColor(this, R.color.black))
         }
-        call?.enqueue(object : Callback<ListResults> {
-            override fun onResponse(call: Call<ListResults>, response: Response<ListResults>) {
+
+        call?.enqueue(object : Callback<ListResultsMovie> {
+            override fun onResponse(call: Call<ListResultsMovie>, response: Response<ListResultsMovie>) {
                 response.body()?.let { show(it.results) }
             }
-
-            override fun onFailure(call: Call<ListResults>, t: Throwable) {
+            override fun onFailure(call: Call<ListResultsMovie>, t: Throwable) {
                 Log.e("Error", t.toString())
             }
         })
     }
-
-    fun navigation() {
-        val intent = Intent(this.applicationContext, DetailsMovieActivity::class.java)
-        intent.flags = FLAG_ACTIVITY_NEW_TASK
-        startActivity(intent)
-    }
-
 }

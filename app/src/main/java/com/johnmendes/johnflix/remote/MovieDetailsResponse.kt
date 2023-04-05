@@ -10,7 +10,7 @@ class MovieDetailsResponse() {
     @SerializedName("title")
     var title: String = ""
 
-    @SerializedName("title")
+    @SerializedName("genres")
     var genres: List<String> = listOf()
 
     @SerializedName("release_date")
@@ -21,4 +21,5 @@ class MovieDetailsResponse() {
 
     @SerializedName("overview")
     var overview: String? = ""
+
 }
