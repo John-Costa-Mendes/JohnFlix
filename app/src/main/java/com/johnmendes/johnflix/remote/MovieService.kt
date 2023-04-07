@@ -24,7 +24,7 @@ interface MovieService {
 
     @GET("movie/{movie_id}")
     fun movieDetails(
-        @Path("movie_id") movieId: Int,
+        @Path("movie_id") movieId: String,
         @Query("api_key") apiKey: String = Constants.API_KEY,
         @Query("language") language: String = Constants.LANGUAGE
     ): Call<MovieDetailsResponse>

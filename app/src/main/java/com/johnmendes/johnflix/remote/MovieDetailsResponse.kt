@@ -4,22 +4,28 @@ import com.google.gson.annotations.SerializedName
 
 class MovieDetailsResponse() {
 
-    @SerializedName("poster_path")
-    var posterPath : String? = ""
+    @SerializedName("backdrop_path")
+    var posterPath : String = ""
 
     @SerializedName("title")
     var title: String = ""
 
     @SerializedName("genres")
-    var genres: List<String> = listOf()
+    var genres: List<Genre> = listOf()
 
     @SerializedName("release_date")
     var releaseDate: String = ""
 
     @SerializedName("runtime")
-    var runtime: Int = 0
+    var runtime: String = ""
 
     @SerializedName("overview")
-    var overview: String? = ""
+    var overview: String = ""
 
+}
+
+class Genre() {
+
+    @SerializedName("name")
+    var name: String = ""
 }
