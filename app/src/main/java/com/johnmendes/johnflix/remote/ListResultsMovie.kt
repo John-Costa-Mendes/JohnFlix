@@ -2,8 +2,9 @@ package com.johnmendes.johnflix.remote
 
 import com.google.gson.annotations.SerializedName
 
-class ListResults {
+class ListResultsMovie {
 
     @SerializedName("results")
     var results = listOf<MovieResponse>()
+
 }

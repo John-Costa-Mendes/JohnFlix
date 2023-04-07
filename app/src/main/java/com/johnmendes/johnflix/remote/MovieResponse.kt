@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 class MovieResponse {
 
     @SerializedName ("id")
-    var id : Int = 0
+    var idMovie : Int = 0
 
     @SerializedName ("poster_path")
     var image: String? = ""

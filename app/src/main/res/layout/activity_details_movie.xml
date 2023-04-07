@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/dark_grey">
+
+    <ImageView
+        android:id="@+id/image_movie_details"
+        android:layout_width="match_parent"
+        android:layout_height="260dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@drawable/cocofilme" />
+
+    <TextView
+        android:id="@+id/movie_title_details"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:text="Coco"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/image_movie_details" />
+
+    <TextView
+        android:id="@+id/movie_year"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:text="2023"
+        android:textColor="@color/white_claro"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="@+id/movie_title_details"
+        app:layout_constraintStart_toEndOf="@+id/movie_title_details"
+        app:layout_constraintTop_toBottomOf="@+id/image_movie_details" />
+
+    <TextView
+        android:id="@+id/movie_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:text="120m"
+        android:textColor="@color/white_claro"
+        android:textSize="11sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/movie_title_details" />
+
+    <View
+        android:id="@+id/view_vertical"
+        android:layout_width="1dp"
+        android:layout_height="10dp"
+        android:layout_marginStart="10dp"
+        android:background="@color/white_claro"
+        app:layout_constraintBottom_toBottomOf="@+id/movie_time"
+        app:layout_constraintStart_toEndOf="@+id/movie_time"
+        app:layout_constraintTop_toBottomOf="@+id/movie_title_details" />
+
+    <TextView
+        android:id="@+id/movie_genres"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:text="Animação, Aventura, Comédia"
+        android:textColor="@color/white_claro"
+        android:textSize="11sp"
+        app:layout_constraintBottom_toBottomOf="@+id/movie_time"
+        app:layout_constraintStart_toEndOf="@+id/view_vertical"
+        app:layout_constraintTop_toBottomOf="@+id/movie_title_details" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvActorsLists"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:background="#656565"
+        app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
+        app:layout_constraintTop_toBottomOf="@+id/movie_genres"
+        tools:listitem="@layout/actors"
+        tools:ignore="MissingConstraints" />
+
+    <View
+        android:id="@+id/view_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/white_claro"
+        app:layout_constraintTop_toBottomOf="@+id/rvActorsLists"
+        tools:layout_editor_absoluteX="10dp" />
+
+    <TextView
+        android:id="@+id/movie_synopsis"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginTop="10dp"
+        android:text="sdfgsdfgsdfg asdfg dfg sdfg  dffg sdfg  sdffg sdfg dfg sdfg  sdffg sdffg ss sdfg sdffg sdfgf   sdffg dffg sdfg sdgf sdffg sdffg   sdfg dfg sdg sdffg sdfg sdffg sdffg   dffg  sdfg   dffg sdff sdfg sdfg sdg sdg sdffg sdffg dffg  sdffg sdffg sdffg  sdfg sdgf   sdffg sdffg  sdffg dffg sdffg "
+        android:textColor="@color/white_claro"
+        android:textSize="11sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view_horizontal" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

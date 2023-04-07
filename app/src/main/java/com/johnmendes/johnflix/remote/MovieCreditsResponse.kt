@@ -8,10 +8,9 @@ class MovieCreditsResponse {
     var name: String = ""
 
     @SerializedName ("profile_path")
-    var profilePath: String? = ""
+    var image: String? = ""
 
     @SerializedName ("character")
-    var character: String? = ""
-
+    var character: String = ""
 
 }
