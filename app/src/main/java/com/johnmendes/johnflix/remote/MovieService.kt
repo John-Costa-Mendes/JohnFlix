@@ -13,13 +13,15 @@ interface MovieService {
         @GET("movie/popular")
     fun moviePopular(
         @Query("api_key") apiKey: String = API_KEY,
-        @Query("language") language: String = LANGUAGE
+        @Query("language") language: String = LANGUAGE,
+        @Query("page") page: Int = 1,
     ): Call<ListResultsMovie>
 
     @GET("movie/upcoming")
     fun movieUpcoming(
         @Query("api_key") apiKey: String = API_KEY,
-        @Query("language") language: String = LANGUAGE
+        @Query("language") language: String = LANGUAGE,
+        @Query("page") page: Int = 1,
     ): Call<ListResultsMovie>
 
     @GET("movie/{movie_id}")

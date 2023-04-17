@@ -1,9 +1,9 @@
 package com.johnmendes.johnflix
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
@@ -12,7 +12,6 @@ import com.johnmendes.johnflix.databinding.ActivityMainBinding
 import com.johnmendes.johnflix.remote.ListResultsMovie
 import com.johnmendes.johnflix.remote.MovieResponse
 import com.johnmendes.johnflix.remote.RetrofitClient
-import kotlinx.android.synthetic.main.movie.view.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -24,8 +23,13 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private var recyclerView: RecyclerView? = null
     private var recyclerViewMovieAdapter: RecyclerViewMovieAdapter? = null
     private var movieList = mutableListOf<Movie>()
+    private var pastVisiblesItems = 0
+    private var visibleItemCount = 0
+    private var totalItemCount = 0
+    private var mLayoutManager: GridLayoutManager? = null
+    private var loading = true
 
-    @SuppressLint("MissingInflatedId")
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -41,6 +45,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         binding.Upcoming.setOnClickListener(this)
 
         segmentedButtonClicked(R.id.Popular)
+        //setupPagination()
     }
 
     private fun show(movies: List<MovieResponse>) {
@@ -81,6 +86,25 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             }
             override fun onFailure(call: Call<ListResultsMovie>, t: Throwable) {
                 Log.e("Error", t.toString())
+            }
+        })
+    }
+
+    private fun setupPagination(){
+        recyclerView?.addOnScrollListener(object : RecyclerView.OnScrollListener(){
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int){
+                if (dy > 0){
+                    visibleItemCount = mLayoutManager!!.childCount
+                    totalItemCount = mLayoutManager!!.itemCount
+                    pastVisiblesItems = mLayoutManager!!.findFirstVisibleItemPosition()
+                    if (loading){
+                        if(visibleItemCount + pastVisiblesItems >= totalItemCount){
+                            loading = false
+                            Toast.makeText(this@MainActivity, "Fim da página", Toast.LENGTH_SHORT).show()
+                            recyclerViewMovieAdapter?.notifyDataSetChanged()
+                        }
+                    }
+                }
             }
         })
     }

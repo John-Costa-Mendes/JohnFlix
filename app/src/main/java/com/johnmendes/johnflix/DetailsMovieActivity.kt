@@ -67,15 +67,14 @@ class DetailsMovieActivity : AppCompatActivity() {
     }
 
     private fun show(details: MovieDetailsResponse){
-        titleTextView?.text = details.title
-        yearTextView?.text = details.releaseDate.split('-')[0]
-        timeTextView?.text = "${details.runtime} m"
-
         var genres = ""
         details.genres.forEach {
             genres = genres.plus(it.name).plus(", ")
         }
 
+        titleTextView?.text = details.title
+        yearTextView?.text = details.releaseDate.split('-')[0]
+        timeTextView?.text = "${details.runtime} m"
         genresTextView?.text = genres.trimEnd(' ', ',')
         synopsisTextView?.text = details.overview
         posterImageView?.let {
@@ -103,11 +102,9 @@ class DetailsMovieActivity : AppCompatActivity() {
             override fun onResponse(call: Call<MovieDetailsResponse>, response: Response<MovieDetailsResponse>) {
                 response.body()?.let { show(it) }
             }
-
             override fun onFailure(call: Call<MovieDetailsResponse>, t: Throwable) {
                 Log.e("Error", t.stackTraceToString())
             }
-
         })
     }
 }
