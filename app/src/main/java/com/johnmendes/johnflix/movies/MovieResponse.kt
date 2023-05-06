@@ -1,4 +1,4 @@
-package com.johnmendes.johnflix.remote
+package com.johnmendes.johnflix.movies
 
 import com.google.gson.annotations.SerializedName
 

@@ -1,11 +1,13 @@
 package com.johnmendes.johnflix.remote
 
+import com.johnmendes.johnflix.detailsMovies.DetailsMovieApiService
+import com.johnmendes.johnflix.movies.MovieApiService
 import com.johnmendes.johnflix.util.Constants.Companion.BASE_URL
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class RetrofitClient {
+class RetrofitClient (){
 
     companion object {
         private lateinit var INSTANCE: Retrofit
@@ -22,8 +24,12 @@ class RetrofitClient {
             return INSTANCE
         }
 
-        fun createService(): MovieService {
-            return getRetrofitInstance().create(MovieService::class.java)
+        fun createMovieService(): MovieApiService {
+            return getRetrofitInstance().create(MovieApiService::class.java)
+        }
+
+        fun createDetailsMovieService(): DetailsMovieApiService {
+            return getRetrofitInstance().create(DetailsMovieApiService::class.java)
         }
     }
 }

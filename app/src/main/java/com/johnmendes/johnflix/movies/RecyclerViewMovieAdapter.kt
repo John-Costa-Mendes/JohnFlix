@@ -1,4 +1,4 @@
-package com.johnmendes.johnflix
+package com.johnmendes.johnflix.movies
 
 import android.content.Intent
 import android.view.LayoutInflater
@@ -7,11 +7,14 @@ import android.view.ViewGroup
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.johnmendes.johnflix.R
+import com.johnmendes.johnflix.detailsMovies.DetailsMovieActivity
+import com.johnmendes.johnflix.movies.models.Movie
 import com.johnmendes.johnflix.util.Constants.Companion.IMAGE_BASE_URL
 import kotlinx.android.synthetic.main.movie.view.*
 
 class RecyclerViewMovieAdapter constructor(
-    private val getActivity: MainActivity, private val movieList: List<Movie>)
+    private val getActivity: MoviesActivity, private val movieList: List<Movie>)
     : RecyclerView.Adapter<RecyclerViewMovieAdapter.MyViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -35,6 +38,7 @@ class RecyclerViewMovieAdapter constructor(
     }
 
     class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+
         fun bindMovie(movie: Movie) {
             itemView.movie_title.text = movie.title
             itemView.TAG.text = movie.date

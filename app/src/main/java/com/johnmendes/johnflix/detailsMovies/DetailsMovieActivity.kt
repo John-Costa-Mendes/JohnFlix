@@ -1,17 +1,20 @@
-package com.johnmendes.johnflix
+package com.johnmendes.johnflix.detailsMovies
 
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.johnmendes.johnflix.R
 import com.johnmendes.johnflix.databinding.ActivityDetailsMovieBinding
-import com.johnmendes.johnflix.remote.ListResultsMovieCredits
-import com.johnmendes.johnflix.remote.MovieCreditsResponse
+import com.johnmendes.johnflix.detailsMovies.models.Actors
+import com.johnmendes.johnflix.detailsMovies.viewmodel.DetailsMovieViewModel
 import com.johnmendes.johnflix.remote.MovieDetailsResponse
 import com.johnmendes.johnflix.remote.RetrofitClient
 import com.johnmendes.johnflix.util.Constants
@@ -22,10 +25,12 @@ import retrofit2.Response
 class DetailsMovieActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityDetailsMovieBinding
+    private lateinit var viewModel: DetailsMovieViewModel
+
     private var recyclerView: RecyclerView? = null
     private var recyclerViewActorsAdapter: RecyclerViewActorsAdapter? = null
     private var actorsList = mutableListOf<Actors>()
-    private val service = RetrofitClient.createService()
+    private val service = RetrofitClient.createDetailsMovieService()
     private var titleTextView: TextView? = null
     private var posterImageView: ImageView? = null
     private var yearTextView: TextView? = null
@@ -38,6 +43,8 @@ class DetailsMovieActivity : AppCompatActivity() {
         binding = ActivityDetailsMovieBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        viewModel = ViewModelProvider(this).get(DetailsMovieViewModel::class.java)
+
         titleTextView = findViewById(R.id.movie_title_details)
         posterImageView = findViewById(R.id.image_movie_details)
         yearTextView = findViewById(R.id.movie_year)
@@ -45,13 +52,7 @@ class DetailsMovieActivity : AppCompatActivity() {
         genresTextView = findViewById(R.id.movie_genres)
         synopsisTextView = findViewById(R.id.movie_synopsis)
 
-        recyclerView = findViewById(R.id.rvActorsLists)
-        recyclerViewActorsAdapter = RecyclerViewActorsAdapter(this@DetailsMovieActivity, actorsList)
-        val layoutManager: RecyclerView.LayoutManager =
-            GridLayoutManager(this, 1, LinearLayoutManager.HORIZONTAL, false)
-        recyclerView?.layoutManager = layoutManager
-        recyclerView?.adapter = recyclerViewActorsAdapter
-
+        recyclerviewActors()
         loadActors()
         loadDetails()
 
@@ -83,6 +84,7 @@ class DetailsMovieActivity : AppCompatActivity() {
     }
 
     private fun loadActors() {
+        binding.progressBarActors.visibility = View.VISIBLE
         val call: Call<ListResultsMovieCredits> =
             service.movieCredits(movieId = intent.getIntExtra("movie_id", -1).toString())
         call.enqueue(object : Callback<ListResultsMovieCredits> {
@@ -106,5 +108,15 @@ class DetailsMovieActivity : AppCompatActivity() {
                 Log.e("Error", t.stackTraceToString())
             }
         })
+    }
+
+    private fun recyclerviewActors() {
+        recyclerView = findViewById(R.id.rvActorsLists)
+        recyclerViewActorsAdapter = RecyclerViewActorsAdapter(this@DetailsMovieActivity, actorsList)
+        val layoutManager: RecyclerView.LayoutManager =
+            GridLayoutManager(this, 1, LinearLayoutManager.HORIZONTAL, false)
+        recyclerView?.layoutManager = layoutManager
+        recyclerView?.adapter = recyclerViewActorsAdapter
+        binding.progressBarActors.visibility = View.GONE
     }
 }

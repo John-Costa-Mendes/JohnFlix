@@ -1,14 +1,12 @@
-package com.johnmendes.johnflix.remote
+package com.johnmendes.johnflix.movies
 
-import com.johnmendes.johnflix.util.Constants
 import com.johnmendes.johnflix.util.Constants.Companion.API_KEY
 import com.johnmendes.johnflix.util.Constants.Companion.LANGUAGE
 import retrofit2.Call
 import retrofit2.http.GET
-import retrofit2.http.Path
 import retrofit2.http.Query
 
-interface MovieService {
+interface MovieApiService {
 
         @GET("movie/popular")
     fun moviePopular(
@@ -23,19 +21,4 @@ interface MovieService {
         @Query("language") language: String = LANGUAGE,
         @Query("page") page: Int = 1,
     ): Call<ListResultsMovie>
-
-    @GET("movie/{movie_id}")
-    fun movieDetails(
-        @Path("movie_id") movieId: String,
-        @Query("api_key") apiKey: String = Constants.API_KEY,
-        @Query("language") language: String = Constants.LANGUAGE
-    ): Call<MovieDetailsResponse>
-
-    @GET("movie/{movie_id}/credits")
-    fun movieCredits(
-        @Path("movie_id") movieId: String,
-        @Query("api_key") apiKey: String = API_KEY,
-        @Query("language") language: String = LANGUAGE
-    ): Call<ListResultsMovieCredits>
-
 }
