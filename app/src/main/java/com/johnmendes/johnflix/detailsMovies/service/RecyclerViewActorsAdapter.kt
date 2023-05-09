@@ -1,4 +1,4 @@
-package com.johnmendes.johnflix.detailsMovies
+package com.johnmendes.johnflix.detailsMovies.service
 
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.johnmendes.johnflix.R
 import com.johnmendes.johnflix.detailsMovies.models.Actors
+import com.johnmendes.johnflix.detailsMovies.view.DetailsMovieActivity
 import com.johnmendes.johnflix.util.Constants
 import kotlinx.android.synthetic.main.actors.view.*
 

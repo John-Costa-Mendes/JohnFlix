@@ -4,8 +4,8 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.johnmendes.johnflix.movies.ListResultsMovie
-import com.johnmendes.johnflix.movies.MovieResponse
+import com.johnmendes.johnflix.movies.models.ListResultsMovie
+import com.johnmendes.johnflix.movies.models.MovieResponse
 import com.johnmendes.johnflix.remote.RetrofitClient
 import retrofit2.Call
 import retrofit2.Callback
@@ -32,9 +32,9 @@ class MoviesViewModel : ViewModel() {
         val service = RetrofitClient.createMovieService()
 
         isLoading.value = true
+
         val call: Call<ListResultsMovie>
         call = if (type == MoviesType.UPCOMING) service.movieUpcoming() else service.moviePopular()
-
         call.enqueue(object : Callback<ListResultsMovie> {
             override fun onResponse(call: Call<ListResultsMovie>, response: Response<ListResultsMovie>) {
                 isLoading.value = false

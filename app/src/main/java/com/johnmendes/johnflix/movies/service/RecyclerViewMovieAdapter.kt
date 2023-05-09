@@ -1,4 +1,4 @@
-package com.johnmendes.johnflix.movies
+package com.johnmendes.johnflix.movies.service
 
 import android.content.Intent
 import android.view.LayoutInflater
@@ -8,8 +8,9 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.johnmendes.johnflix.R
-import com.johnmendes.johnflix.detailsMovies.DetailsMovieActivity
+import com.johnmendes.johnflix.detailsMovies.view.DetailsMovieActivity
 import com.johnmendes.johnflix.movies.models.Movie
+import com.johnmendes.johnflix.movies.view.MoviesActivity
 import com.johnmendes.johnflix.util.Constants.Companion.IMAGE_BASE_URL
 import kotlinx.android.synthetic.main.movie.view.*
 

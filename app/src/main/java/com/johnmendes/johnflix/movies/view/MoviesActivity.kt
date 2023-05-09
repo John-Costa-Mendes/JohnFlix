@@ -1,4 +1,4 @@
-package com.johnmendes.johnflix.movies
+package com.johnmendes.johnflix.movies.view
 
 import android.os.Bundle
 import android.view.View
@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.johnmendes.johnflix.R
 import com.johnmendes.johnflix.databinding.ActivityMoviesBinding
 import com.johnmendes.johnflix.movies.models.Movie
+import com.johnmendes.johnflix.movies.models.MovieResponse
+import com.johnmendes.johnflix.movies.service.RecyclerViewMovieAdapter
 import com.johnmendes.johnflix.movies.viewmodel.MoviesViewModel
 
 class MoviesActivity : AppCompatActivity(), View.OnClickListener {
@@ -77,9 +79,7 @@ class MoviesActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun setObserver() {
-        viewModel.movies().observe(this, Observer {
-            show(it)
-        })
+        viewModel.movies().observe(this, Observer { show(it) })
 
         viewModel.isLoading().observe(this, Observer {
             binding.progressBar.visibility = if (it) View.VISIBLE else View.GONE

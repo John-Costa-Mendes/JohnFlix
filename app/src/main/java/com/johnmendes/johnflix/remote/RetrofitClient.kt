@@ -1,7 +1,7 @@
 package com.johnmendes.johnflix.remote
 
-import com.johnmendes.johnflix.detailsMovies.DetailsMovieApiService
-import com.johnmendes.johnflix.movies.MovieApiService
+import com.johnmendes.johnflix.detailsMovies.service.DetailsMovieApiService
+import com.johnmendes.johnflix.movies.service.MovieApiService
 import com.johnmendes.johnflix.util.Constants.Companion.BASE_URL
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit

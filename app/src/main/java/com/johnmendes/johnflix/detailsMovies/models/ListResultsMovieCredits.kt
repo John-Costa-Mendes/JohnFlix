@@ -1,4 +1,4 @@
-package com.johnmendes.johnflix.detailsMovies
+package com.johnmendes.johnflix.detailsMovies.models
 
 import com.google.gson.annotations.SerializedName
 

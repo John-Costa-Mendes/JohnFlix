@@ -1,5 +1,6 @@
-package com.johnmendes.johnflix.movies
+package com.johnmendes.johnflix.movies.service
 
+import com.johnmendes.johnflix.movies.models.ListResultsMovie
 import com.johnmendes.johnflix.util.Constants.Companion.API_KEY
 import com.johnmendes.johnflix.util.Constants.Companion.LANGUAGE
 import retrofit2.Call

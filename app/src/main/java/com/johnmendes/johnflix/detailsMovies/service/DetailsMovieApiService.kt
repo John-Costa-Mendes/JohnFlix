@@ -1,5 +1,6 @@
-package com.johnmendes.johnflix.detailsMovies
+package com.johnmendes.johnflix.detailsMovies.service
 
+import com.johnmendes.johnflix.detailsMovies.models.ListResultsMovieCredits
 import com.johnmendes.johnflix.remote.MovieDetailsResponse
 import com.johnmendes.johnflix.util.Constants
 import retrofit2.Call

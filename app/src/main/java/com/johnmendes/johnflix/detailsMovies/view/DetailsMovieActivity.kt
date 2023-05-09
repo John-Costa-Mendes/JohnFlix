@@ -1,11 +1,11 @@
-package com.johnmendes.johnflix.detailsMovies
+package com.johnmendes.johnflix.detailsMovies.view
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,14 +13,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.johnmendes.johnflix.R
 import com.johnmendes.johnflix.databinding.ActivityDetailsMovieBinding
+import com.johnmendes.johnflix.detailsMovies.service.RecyclerViewActorsAdapter
 import com.johnmendes.johnflix.detailsMovies.models.Actors
+import com.johnmendes.johnflix.detailsMovies.models.MovieCreditsResponse
 import com.johnmendes.johnflix.detailsMovies.viewmodel.DetailsMovieViewModel
 import com.johnmendes.johnflix.remote.MovieDetailsResponse
-import com.johnmendes.johnflix.remote.RetrofitClient
 import com.johnmendes.johnflix.util.Constants
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class DetailsMovieActivity : AppCompatActivity() {
 
@@ -30,7 +28,7 @@ class DetailsMovieActivity : AppCompatActivity() {
     private var recyclerView: RecyclerView? = null
     private var recyclerViewActorsAdapter: RecyclerViewActorsAdapter? = null
     private var actorsList = mutableListOf<Actors>()
-    private val service = RetrofitClient.createDetailsMovieService()
+
     private var titleTextView: TextView? = null
     private var posterImageView: ImageView? = null
     private var yearTextView: TextView? = null
@@ -53,9 +51,7 @@ class DetailsMovieActivity : AppCompatActivity() {
         synopsisTextView = findViewById(R.id.movie_synopsis)
 
         recyclerviewActors()
-        loadActors()
-        loadDetails()
-
+        setObserver()
     }
 
     private fun show(actors: List<MovieCreditsResponse>) {
@@ -69,10 +65,7 @@ class DetailsMovieActivity : AppCompatActivity() {
 
     private fun show(details: MovieDetailsResponse){
         var genres = ""
-        details.genres.forEach {
-            genres = genres.plus(it.name).plus(", ")
-        }
-
+        details.genres.forEach {genres = genres.plus(it.name).plus(", ")}
         titleTextView?.text = details.title
         yearTextView?.text = details.releaseDate.split('-')[0]
         timeTextView?.text = "${details.runtime} m"
@@ -83,31 +76,16 @@ class DetailsMovieActivity : AppCompatActivity() {
         }
     }
 
-    private fun loadActors() {
-        binding.progressBarActors.visibility = View.VISIBLE
-        val call: Call<ListResultsMovieCredits> =
-            service.movieCredits(movieId = intent.getIntExtra("movie_id", -1).toString())
-        call.enqueue(object : Callback<ListResultsMovieCredits> {
-            override fun onResponse(call: Call<ListResultsMovieCredits>, response: Response<ListResultsMovieCredits>) {
-                response.body()?.let { show(it.castResults) }
-            }
-            override fun onFailure(call: Call<ListResultsMovieCredits>, t: Throwable) {
-                Log.e("Error", t.stackTraceToString())
-            }
-        })
-    }
+    private fun setObserver(){
+        viewModel.loadActors(movieId = intent.getIntExtra("movie_id", -1).toString())
+        viewModel.actors().observe(this, Observer { show(it) })
 
-    private fun loadDetails() {
-        val call : Call<MovieDetailsResponse> =
-            service.movieDetails(movieId = intent.getIntExtra("movie_id", -1).toString())
-        call.enqueue(object : Callback<MovieDetailsResponse> {
-            override fun onResponse(call: Call<MovieDetailsResponse>, response: Response<MovieDetailsResponse>) {
-                response.body()?.let { show(it) }
-            }
-            override fun onFailure(call: Call<MovieDetailsResponse>, t: Throwable) {
-                Log.e("Error", t.stackTraceToString())
-            }
-        })
+        viewModel.loadDetails(movieId = intent.getIntExtra("movie_id", -1).toString())
+        viewModel.details().observe(this, Observer { show(it) })
+
+        viewModel.isLoading().observe(this, Observer {
+            binding.progressBarActors.visibility = if (it) View.VISIBLE else View.GONE })
+
     }
 
     private fun recyclerviewActors() {

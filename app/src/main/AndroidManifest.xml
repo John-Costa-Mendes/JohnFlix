@@ -14,10 +14,10 @@
         android:theme="@style/Theme.JohnFlix"
         tools:targetApi="31">
         <activity
-            android:name=".movies.MoviesActivity"
+            android:name=".movies.view.MoviesActivity"
             android:exported="false" />
         <activity
-            android:name=".detailsMovies.DetailsMovieActivity"
+            android:name=".detailsMovies.view.DetailsMovieActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
