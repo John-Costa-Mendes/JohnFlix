@@ -1,5 +1,6 @@
 package com.johnmendes.johnflix.movies.view
 
+import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -57,16 +58,14 @@ class MoviesActivity : AppCompatActivity(), View.OnClickListener {
     private fun segmentedButtonClicked(id: Int) {
         if (id == R.id.Upcoming) {
             viewModel.loadMovies(MoviesViewModel.MoviesType.UPCOMING)
-            binding.Popular.setBackgroundColor(ContextCompat.getColor(this, R.color.dark_grey))
-            binding.Popular.setTextColor(ContextCompat.getColor(this, R.color.white))
-            binding.Upcoming.setBackgroundColor(ContextCompat.getColor(this, R.color.white))
-            binding.Upcoming.setTextColor(ContextCompat.getColor(this, R.color.black))
+            popular(this,R.color.dark_grey, R.color.white)
+            upcoming(this, R.color.white, R.color.black)
+            textView(R.string.upcoming_movies)
         } else if (id == R.id.Popular) {
             viewModel.loadMovies(MoviesViewModel.MoviesType.POPULAR)
-            binding.Upcoming.setBackgroundColor(ContextCompat.getColor(this, R.color.dark_grey))
-            binding.Upcoming.setTextColor(ContextCompat.getColor(this, R.color.white))
-            binding.Popular.setBackgroundColor(ContextCompat.getColor(this, R.color.white))
-            binding.Popular.setTextColor(ContextCompat.getColor(this, R.color.black))
+            upcoming(this, R.color.dark_grey, R.color.white)
+            popular(this, R.color.white, R.color.black)
+            textView(R.string.popular_movies)
         }
     }
 
@@ -84,5 +83,27 @@ class MoviesActivity : AppCompatActivity(), View.OnClickListener {
         viewModel.isLoading().observe(this, Observer {
             binding.progressBar.visibility = if (it) View.VISIBLE else View.GONE
         })
+
+        viewModel.isLayoutError().observe(this, Observer {
+            binding.layoutError.visibility = if (it) View.VISIBLE else View.GONE
+        })
+
+        viewModel.isLayoutMovies().observe(this, Observer {
+            binding.layoutMovies.visibility = if (it) View.VISIBLE else View.GONE
+        })
+    }
+
+    private fun popular(context: Context, backgroundColor: Int, textColor: Int) {
+        binding.Popular.setBackgroundColor(ContextCompat.getColor(context, backgroundColor))
+        binding.Popular.setTextColor(ContextCompat.getColor(context, textColor))
+    }
+
+    private fun upcoming(context: Context, backgroundColor: Int, textColor: Int) {
+        binding.Upcoming.setBackgroundColor(ContextCompat.getColor(context, backgroundColor))
+        binding.Upcoming.setTextColor(ContextCompat.getColor(context, textColor))
+    }
+
+    private fun textView(title: Int) {
+        binding.textView.setText(title)
     }
 }

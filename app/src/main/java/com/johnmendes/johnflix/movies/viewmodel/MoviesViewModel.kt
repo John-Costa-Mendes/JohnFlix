@@ -19,6 +19,8 @@ class MoviesViewModel : ViewModel() {
 
     private var movies = MutableLiveData<List<MovieResponse>>()
     private var isLoading = MutableLiveData<Boolean>()
+    private var isLayoutError = MutableLiveData<Boolean>()
+    private var isLayoutMovies = MutableLiveData<Boolean>()
 
     fun movies(): LiveData<List<MovieResponse>> {
         return movies
@@ -26,6 +28,14 @@ class MoviesViewModel : ViewModel() {
 
     fun isLoading(): LiveData<Boolean> {
         return isLoading
+    }
+
+    fun isLayoutError(): LiveData<Boolean> {
+        return isLayoutError
+    }
+
+    fun isLayoutMovies(): LiveData<Boolean> {
+        return isLayoutMovies
     }
 
     fun loadMovies(type: MoviesType) {
@@ -37,10 +47,14 @@ class MoviesViewModel : ViewModel() {
         call = if (type == MoviesType.UPCOMING) service.movieUpcoming() else service.moviePopular()
         call.enqueue(object : Callback<ListResultsMovie> {
             override fun onResponse(call: Call<ListResultsMovie>, response: Response<ListResultsMovie>) {
+                isLayoutMovies.value = true
                 isLoading.value = false
+                isLayoutError.value = false
                 response.body()?.let { movies.value = it.results }
             }
             override fun onFailure(call: Call<ListResultsMovie>, t: Throwable) {
+                isLayoutMovies.value = false
+                isLayoutError.value = true
                 isLoading.value = false
                 Log.e("Error", t.toString())
             }
