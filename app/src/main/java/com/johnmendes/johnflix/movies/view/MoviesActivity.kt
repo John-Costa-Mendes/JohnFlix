@@ -18,12 +18,12 @@ import com.johnmendes.johnflix.movies.viewmodel.MoviesViewModel
 
 class MoviesActivity : AppCompatActivity(), View.OnClickListener {
 
-
     private lateinit var binding: ActivityMoviesBinding
     private var recyclerView: RecyclerView? = null
     private var recyclerViewMovieAdapter: RecyclerViewMovieAdapter? = null
     private var movieList = mutableListOf<Movie>()
     private lateinit var viewModel: MoviesViewModel
+    private var clickButton = R.id.Popular
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +38,7 @@ class MoviesActivity : AppCompatActivity(), View.OnClickListener {
         setObserver()
         recyclerviewMovies()
         segmentedButtonClicked(R.id.Popular)
+        refresh()
     }
 
     private fun show(movies: List<MovieResponse>) {
@@ -52,6 +53,7 @@ class MoviesActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(view: View) {
         if (view.id in listOf(R.id.Popular, R.id.Upcoming)) {
             segmentedButtonClicked(view.id)
+            clickButton = view.id
         }
     }
 
@@ -67,6 +69,7 @@ class MoviesActivity : AppCompatActivity(), View.OnClickListener {
             popular(this, R.color.white, R.color.black)
             textView(R.string.popular_movies)
         }
+        if (binding.Refresh.isRefreshing) binding.Refresh.isRefreshing = false
     }
 
     private fun recyclerviewMovies() {
@@ -105,5 +108,9 @@ class MoviesActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun textView(title: Int) {
         binding.textView.setText(title)
+    }
+
+    private fun refresh() {
+        binding.Refresh.setOnRefreshListener { segmentedButtonClicked(clickButton) }
     }
 }
